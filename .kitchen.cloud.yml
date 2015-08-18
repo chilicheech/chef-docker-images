@@ -4,15 +4,16 @@ driver_config:
    digitalocean_api_token: <%= ENV['DIGITALOCEAN_API_TOKEN'] %>
 
 provisioner:
-  name: chef_zero
+  name: chef_solo
   require_chef_omnibus: true
 
 platforms:
-- name: fedora-21
+- name: ubuntu-15.04
   driver_plugin: digital_ocean
   driver_config:
-    size: 2gb
-    image: fedora-21-x64
+    # size: 2gb
+    size: 16gb
+    image: ubuntu-15-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
