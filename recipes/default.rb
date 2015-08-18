@@ -13,7 +13,6 @@ end
     tag 'latest'
     command "bash -c 'curl -L https://www.chef.io/chef/install.sh | bash -s -- -v #{version}'"
     detach false
-    action :run
   end
 
   directory "/opt/chefbuilder-#{version}" do
