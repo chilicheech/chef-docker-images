@@ -1,3 +1,4 @@
+default['chef-docker-images']['']
 default['chef-docker-images']['versions'] = %w(
   12.0.0
   12.0.1

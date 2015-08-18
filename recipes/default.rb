@@ -7,6 +7,10 @@ docker_image 'fedora' do
   action :pull_if_missing
 end
 
+# variables
+account = node['chef-docker-images']['account']
+
+# resource generation loop
 node['chef-docker-images']['versions'].each do |version|
   docker_container "chef-#{version}" do
     repo 'fedora'
