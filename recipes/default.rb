@@ -7,7 +7,7 @@ docker_image 'fedora' do
   action :pull_if_missing
 end
 
-%w( 12.0.0 12.0.1 12.0.3 12.1.0 12.1.1 12.1.2 12.2.1 12.3.0 12.4.0 12.4.1 ).each do |version|
+node['chef-docker-images']['versions'].each do |version|
   docker_container "chef-#{version}" do
     repo 'fedora'
     tag 'latest'
