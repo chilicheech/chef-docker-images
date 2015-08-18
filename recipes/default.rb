@@ -43,8 +43,8 @@ node['chef-docker-images']['versions'].each do |version|
     action :create
   end
 
-  docker_image "someara/chef #{version}" do
-    repo 'someara/chef'
+  docker_image "#{account}/chef #{version}" do
+    repo "#{account}/chef"
     tag version
     source "/opt/chefbuilder-#{version}"
     action :build_if_missing
