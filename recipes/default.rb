@@ -1,8 +1,4 @@
 ####
-docker_service 'default' do
-  action [:create, :start]
-end
-
 docker_image 'fedora' do
   action :pull_if_missing
 end
@@ -36,6 +32,7 @@ node['chef-docker-images']['versions'].each do |version|
     content <<-EOF
     FROM scratch
     ADD opt /opt
+    VOLUME [ '/opt/chef' ]
     EOF
     owner 'root'
     group 'root'

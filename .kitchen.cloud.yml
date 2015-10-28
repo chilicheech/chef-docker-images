@@ -21,4 +21,5 @@ platforms:
 suites:
 - name: default
   run_list:
+  - recipe[chef-docker-images::service]
   - recipe[chef-docker-images::default]
