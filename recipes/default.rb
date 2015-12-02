@@ -6,15 +6,27 @@ end
 # variables
 account = node['chef-docker-images']['account']
 
+package 'curl' do
+  action :install
+end
+
+package 'rpm2cpio' do
+  action :install
+end
+
 # resource generation loop
 node['chef-docker-images']['versions'].each do |version|
-  docker_container "chef-#{version}" do
-    repo 'fedora'
-    tag 'latest'
-    command "bash -c 'curl -L https://www.chef.io/chef/install.sh | bash -s -- -v #{version}'"
-    detach false
-  end
 
+  chef_url = `wget -qO- "http://omnitruck.chef.io/stable/chef/metadata?p=el&pv=5&m=x86_64&v=#{version}" 2>&1 | grep ^url | awk '{ print $2 }'`.chomp
+  chef_sha256 = `wget -qO- "http://omnitruck.chef.io/stable/chef/metadata?p=el&pv=5&m=x86_64&v=#{version}" 2>&1 | grep ^sha256 | awk '{ print $2 }'`.chomp
+
+  # require 'pry' ; binding.pry
+  
+  remote_file "/root/chef-#{version}.el5.rpm" do
+    source chef_url
+    checksum chef_sha256
+  end
+      
   directory "/opt/chefbuilder-#{version}" do
     owner 'root'
     group 'root'
@@ -23,10 +35,11 @@ node['chef-docker-images']['versions'].each do |version|
     action :create
   end
 
-  execute "copy chef-#{version}" do
-    command "docker cp chef-#{version}:/opt /opt/chefbuilder-#{version}"
+  execute "rpm2cpio /root/chef-#{version}.el5.rpm | cpio -idmv" do
+    cwd "/opt/chefbuilder-#{version}"
     creates "/opt/chefbuilder-#{version}/opt"
-  end
+    action :run
+  end 
 
   file "/opt/chefbuilder-#{version}/Dockerfile" do
     content <<-EOF
