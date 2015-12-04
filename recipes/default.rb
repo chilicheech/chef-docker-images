@@ -1,8 +1,3 @@
-####
-docker_image 'fedora' do
-  action :pull_if_missing
-end
-
 # variables
 account = node['chef-docker-images']['account']
 

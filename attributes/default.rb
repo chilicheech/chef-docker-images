@@ -1,4 +1,4 @@
-default['chef-docker-images']['account'] = 'someara'
+default['chef-docker-images']['account'] = 'chef'
 default['chef-docker-images']['versions'] = %w(
   12.0.0
   12.0.1
