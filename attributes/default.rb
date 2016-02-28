@@ -13,4 +13,5 @@ default['chef-docker-images']['versions'] = %w(
   12.4.3
   12.5.1
   12.6.0
+  12.7.2
 )
