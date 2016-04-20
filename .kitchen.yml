@@ -1,9 +1,7 @@
 #<% require 'kitchen-sync' %>
 ---
 driver_config:
-   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
-   instance_type: <%= ENV['EC2_INSTANCE_TYPE'] %>
-   availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] %>
+   digitalocean_access_token: <%= ENV['DIGITALOCEAN_API_TOKEN'] %>
 
 provisioner:
   name: chef_zero
@@ -11,16 +9,17 @@ provisioner:
 
 platforms:
 - name: ubuntu-15.10
-  driver_plugin: ec2
+  driver_plugin: digitalocean
   driver_config:
-    # image_id: ami-3e52445f # us-west ubuntu-15.10
-    image_id: ami-cfdea4a5 # us-east ubuntu-15.10
-    security_group_ids: <%= ENV['EC2_SECURITY_GROUP_IDS'] %>
+    size: 2gb
+    image: ubuntu-15-10-x64
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   transport:
-    username: ubuntu
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
-  - recipe[apt::default]
+  - recipe[apt]
 
 suites:
 - name: default
