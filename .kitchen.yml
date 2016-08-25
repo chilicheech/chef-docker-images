@@ -8,11 +8,11 @@ provisioner:
   require_chef_omnibus: true
 
 platforms:
-- name: ubuntu-15.10
+- name: ubuntu-16.04
   driver_plugin: digitalocean
   driver_config:
     size: 2gb
-    image: ubuntu-15-10-x64
+    image: ubuntu-16-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
