@@ -20,4 +20,5 @@ default['chef-docker-images']['versions'] = %w(
   12.11.18
   12.12.13
   12.13.37
+  12.14.89
 )
